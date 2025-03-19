@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -6,52 +8,31 @@ const { Pool } = require("pg");
 const app = express();
 const port = 5000;
 
-// Налаштування CORS
-const corsOptions = {
-  origin: "http://localhost:3000",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "X-Requested-With",
-    "Accept",
-  ],
-};
-
-app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
-  );
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-
-  next();
-});
-
 app.use(bodyParser.json());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "quizles_db",
-  password: "2146",
-  port: 5432,
+  user: process.env.DB_USER || "postgres",
+  host: process.env.DB_HOST || "localhost",
+  database: process.env.DB_NAME || "quizles_db",
+  password: process.env.DB_PASSWORD || 2146,
+  port: process.env.DB_PORT || 5432,
+  connectionString: process.env.DATABASE_URL, // Використовуємо змінну середовища
+  ssl: { rejectUnauthorized: false },
 });
+module.exports = pool;
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 async function saveQuizToDatabase(quizData) {
   const client = await pool.connect();
@@ -127,7 +108,7 @@ app.get("/quizzes", async (req, res) => {
           description: row.quiz_description,
           questions: [],
           completions: [],
-          averagePercentage: 0, // Додаємо поле для середнього відсотка
+          averagePercentage: 0,
         });
       }
       const quiz = quizzesMap.get(row.quiz_id);
@@ -187,6 +168,7 @@ app.get("/quizzes", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 // Маршрут для видалення квіза за ID
 app.delete("/quizzes/:id", async (req, res) => {
   const quizId = req.params.id;
@@ -394,7 +376,6 @@ app.put("/quizzes/:id", async (req, res) => {
 });
 app.post("/save-answer", async (req, res) => {
   try {
-    // Отримуємо дані з тіла запиту (JSON)
     const { questionId, answerIndex, isCorrect } = req.body;
 
     // Перевірка на наявність необхідних даних
@@ -402,8 +383,6 @@ app.post("/save-answer", async (req, res) => {
       return res.status(400).json({ error: "Invalid request data" });
     }
 
-    // Додайте логіку для збереження відповіді в базу даних
-    // Наприклад, використовуючи pool.query()
     await pool.query(
       "INSERT INTO answers_results (question_id, answer_index, is_correct) VALUES ($1, $2, $3)",
       [questionId, answerIndex, isCorrect]
@@ -470,7 +449,7 @@ process.on("unhandledRejection", (reason, promise) => {
 process.on("uncaughtException", (error) => {
   console.error("Uncaught Exception:", error);
 });
-// ... ваш існуючий код ...
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
