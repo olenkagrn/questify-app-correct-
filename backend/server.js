@@ -4,11 +4,25 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { Pool } = require("pg");
-
 const app = express();
 const port = 5000;
 
-app.use(bodyParser.json());
+const { Client } = require("pg");
+
+const client = new Client({
+  connectionString:
+    "postgresql://quizzes_db_user:vZdmJZsAHzJjxOVvegoxvGhZdK25MW1T@dpg-cvdg6d7noe9s73c2flk0-a.oregon-postgres.render.com/quizzes_db",
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+
+client
+  .connect()
+  .then(() => console.log("Connected to the database!"))
+  .catch((err) => console.error("Connection error", err.stack));
+
+module.exports = client;
 
 const pool = new Pool({
   user: process.env.DB_USER || "postgres",
