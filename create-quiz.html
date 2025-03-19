@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Catalog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Moo+Lah+Lah&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <main class="create-quiz">
+      <div class="create-quiz__container">
+        <h1 class="create-quiz__heading">Create Quiz</h1>
+        <form class="create-quiz__form">
+          <div class="create-quiz__input-group">
+            <label for="quiz-name" class="create-quiz__label">Quiz name</label>
+            <input
+              type="text"
+              id="quizName"
+              class="create-quiz__input"
+              placeholder="Quiz name"
+            />
+          </div>
+          <div class="create-quiz__input-group">
+            <label for="quiz-description" class="create-quiz__label"
+              >Quiz description</label
+            >
+            <input
+              type="text"
+              id="quizDescription"
+              class="create-quiz__input"
+              placeholder="Quiz description"
+            />
+          </div>
+          <section class="question">
+            <h2 class="question__title">Question</h2>
+            <div class="question__item">
+              <label for="question-1" class="question__label">1</label>
+              <input
+                type="text"
+                id="question-1"
+                class="quiz-input question__input"
+                placeholder="Question text"
+              />
+              <select class="question__type">
+                <option value="text">Text</option>
+
+                <option value="single">Single Choice</option>
+                <option value="multiple">Multiple Choice</option>
+              </select>
+              <button type="button">
+                <svg
+                  class="question__remove"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                >
+                  <path
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                    d="M11.782 4.032a.575.575 0 1 0-.813-.814L7.5 6.687L4.032 3.218a.575.575 0 0 0-.814.814L6.687 7.5l-3.469 3.468a.575.575 0 0 0 .814.814L7.5 8.313l3.469 3.469a.575.575 0 0 0 .813-.814L8.313 7.5z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+            <section class="answers">
+              <h2 class="answers__title">Answers</h2>
+            </section>
+            <button type="button" class="question__add-answer">
+              Add Answer
+            </button>
+          </section>
+          <button type="button" class="create-quiz__add-question">
+            Add Question
+          </button>
+          <button type="button" id="create-quiz__submit">Create Quiz</button>
+        </form>
+      </div>
+    </main>
+    <script type="module" src="./js/create-quiz.js"></script>
+  </body>
+</html>
