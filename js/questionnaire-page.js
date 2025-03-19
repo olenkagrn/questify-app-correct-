@@ -309,17 +309,20 @@ function handleTextAnswer(event) {
 // Функція для збереження результату в БД
 async function saveAnswer(questionId, answerIndex, isCorrect) {
   try {
-    const response = await fetch("http://localhost:5000/save-answer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        questionId,
-        answerIndex,
-        isCorrect,
-      }),
-    });
+    const response = await fetch(
+      "https://questify-app-correct.onrender.com/save-answer",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          questionId,
+          answerIndex,
+          isCorrect,
+        }),
+      }
+    );
 
     if (response.ok) {
       console.log("Answer saved successfully");
