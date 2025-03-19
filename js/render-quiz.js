@@ -70,6 +70,7 @@ async function fetchQuizzes(page = 1) {
 }
 
 async function deleteQuiz(event) {
+  event.stopPropagation();
   const quizId = event.target
     .closest(".quiz-card")
     .getAttribute("data-quiz-id");
@@ -175,6 +176,7 @@ async function editQuiz(event) {
 }
 
 function runQuiz(event) {
+  event.stopPropagation();
   const quizCard = event.target.closest(".quiz-card");
   const quizId = quizCard.getAttribute("data-quiz-id");
 

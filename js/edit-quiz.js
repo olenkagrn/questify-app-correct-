@@ -113,7 +113,7 @@ function clearForm() {
 
   for (let i = questionSections.length - 1; i > 0; i--) {
     questionSections[i].remove();
-  } // Очищення полів першого питання
+  }
 
   const firstQuestion = document.querySelector(".question");
 
