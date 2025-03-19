@@ -1,0 +1,141 @@
+.quiz-catalog-container {
+  background-color: var(--quiz-catalog-bg-color);
+  height: 100vh;
+  padding-top: 9.6rem;
+  .quiz-features-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Irish Grover", system-ui;
+    font-weight: 400;
+    font-size: 4rem;
+    color: var(--main-text-color);
+    margin-bottom: 4.8rem;
+    .quiz-heading {
+      font-size: 4rem;
+    }
+
+    .quiz-create-btn:link,
+    .quiz-create-btn:visited {
+      padding: 1.2rem 1.6rem;
+      font-size: 2.4rem;
+      text-decoration: none;
+      border-radius: 4rem;
+      border: var(--accent-border);
+      &:hover {
+        background-color: var(--main-text-color);
+        color: var(--white-default-color);
+        transition: all ease-in-out 0.3s;
+      }
+    }
+  }
+
+  .quiz-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3.2rem;
+    height: 60vh;
+    .quiz-card {
+      position: relative;
+      background-color: var(--white-default-color);
+      padding: 2.4rem;
+      border-radius: 2rem;
+      .quiz-title__container {
+        display: flex;
+        justify-content: space-between;
+        .quiz-title {
+          font-size: 2rem;
+          font-weight: 700;
+          margin-bottom: 1.6rem;
+        }
+        .quiz-edit-svg {
+          max-width: 2.4rem;
+          max-height: 2.4rem;
+          color: var(--black-default-color);
+        }
+      }
+      .quiz-description {
+        font-size: 1.4rem;
+        margin-bottom: 7.2rem;
+      }
+      .quiz-questions {
+        color: var(--questions-amount-color);
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .quiz-options-container {
+    position: absolute;
+    right: 0; /* Віконце буде відображатись праворуч від картки */
+    top: 25%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 1.6rem;
+    display: none;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .quiz-option-btn {
+    background-color: var(--main-text-color);
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .quiz-option-btn:hover {
+    background-color: var(--accent-color);
+  }
+}
+.quiz-description {
+  font-size: 1.4rem;
+  margin-bottom: 7.2rem;
+}
+.quiz-questions {
+  color: var(--questions-amount-color);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.pagination {
+  margin-top: 8rem;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  justify-content: center;
+  .pagination-link {
+    padding: 0.8rem 2rem;
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: var(--questions-amount-color);
+    .pagination-btn {
+      color: var(--questions-amount-color);
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+    .btn-right {
+      transform: rotate(180deg);
+    }
+    .btn-left {
+    }
+  }
+  .active {
+    border-radius: 100%;
+    background-color: var(--questions-amount-color);
+    color: var(--white-default-color);
+  }
+}
+
+.quiz-list h2 {
+  text-align: center;
+  grid-column: 1 / -1;
+  margin-top: 20rem;
+  color: var(--questions-amount-color);
+  font-size: 4rem;
+  text-transform: uppercase;
+}

@@ -1,0 +1,102 @@
+.create-quiz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e0bbe4; /* Світло-фіолетовий фон */
+}
+
+.create-quiz__container {
+  width: 80%;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.create-quiz__heading {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #4a148c; /* Темно-фіолетовий текст */
+}
+
+.create-quiz__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-quiz__input-group {
+  margin-bottom: 1rem;
+}
+
+.create-quiz__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #6a1b9a; /* Трохи світліший фіолетовий */
+}
+
+.create-quiz__input,
+.quiz-input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #ba68c8; /* Фіолетова рамка */
+  border-radius: 5px;
+  background-color: #f8e8f8; /* Світло-фіолетовий фон інпутів */
+  box-sizing: border-box;
+}
+
+.question__title,
+.answers__title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #6a1b9a;
+}
+
+.question__item,
+.answer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.question__label,
+.answer__label {
+  margin-right: 0.5rem;
+  color: #6a1b9a;
+}
+
+.question__input,
+.answer__input {
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+.question__type,
+.answer__remove,
+.answer__correct,
+.answer__add-next,
+.question__add-answer,
+.create-quiz__add-question {
+  background-color: #ba68c8; /* Фіолетовий фон кнопок та селекту */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.question__remove {
+  background: transparent;
+  color: #4a148c;
+  font-size: 1rem;
+}
+
+.answer__title {
+  margin-right: 0.5rem;
+  color: #6a1b9a;
+}
+
+.create-quiz__add-answer,
+.create-quiz__add-question {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
