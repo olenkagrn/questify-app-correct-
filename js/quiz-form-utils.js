@@ -159,7 +159,7 @@ export function removeQuestion(event) {
         }
       });
 
-      questionCount--; // Зменшуємо лічильник питань
+      questionCount--;
     }
   }
 }

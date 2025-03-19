@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function fetchQuizData(quizId) {
   try {
-    const response = await fetch(`http://localhost:5000/quizzes/${quizId}`);
+    const response = await fetch(
+      `https://questify-app-correct.onrender.com/quizzes/${quizId}`
+    );
     const data = await response.json();
     console.log("Quiz data:", data); // Додайте цей рядок
     if (!data || !data.name || !data.description || !data.questions) {
@@ -57,7 +59,7 @@ function startQuiz(questions) {
   const quizQuestionsContainer = document.getElementById("quiz-questions");
 
   quizQuestionsContainer.innerHTML = "";
-  document.getElementById("start-quiz-btn").style.display = "none"; // Додаємо приховування кнопки
+  document.getElementById("start-quiz-btn").style.display = "none";
 
   questions.forEach((question, index) => {
     const questionElement = document.createElement("div");
@@ -122,10 +124,8 @@ function startQuiz(questions) {
   submitButton.id = "submit-quiz-btn";
   quizQuestionsContainer.appendChild(submitButton);
 
-  // Додаємо обробник події для кнопки "Submit Quiz"
   submitButton.addEventListener("click", submitQuiz);
 
-  // Запускаємо лічильник часу
   startTime = new Date();
 }
 
@@ -138,7 +138,7 @@ async function submitQuiz() {
   const timeTaken = formatTime(endTime - startTime);
 
   displayResults(correctAnswersCount, percentage, timeTaken);
-  document.getElementById("catalog-link").style.display = "block"; // Відображення посилання
+  document.getElementById("catalog-link").style.display = "block";
 
   document.getElementById("submit-quiz-btn").style.display = "none";
 
@@ -147,19 +147,22 @@ async function submitQuiz() {
   const quizId = quizData.id;
 
   try {
-    const response = await fetch("http://localhost:5000/quiz-completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        quizId: quizId,
-        correctAnswers: correctAnswersCount,
-        totalQuestions: totalQuestions,
-        percentage: percentage,
-        timeTaken: timeTaken,
-      }),
-    });
+    const response = await fetch(
+      "https://questify-app-correct.onrender.com/quiz-completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          quizId: quizId,
+          correctAnswers: correctAnswersCount,
+          totalQuestions: totalQuestions,
+          percentage: percentage,
+          timeTaken: timeTaken,
+        }),
+      }
+    );
 
     if (response.ok) {
       console.log("Quiz results saved successfully");
@@ -187,7 +190,6 @@ function calculateCorrectAnswers() {
         correctAnswersCount++;
       }
     } else if (question.question_type === "multiple") {
-      // Логіка для multiple choice
       const selectedAnswers = questionElement.querySelectorAll(
         "input[type='checkbox']:checked"
       );
@@ -209,7 +211,6 @@ function calculateCorrectAnswers() {
         correctAnswersCount += correctSelections / totalCorrectAnswers;
       }
     } else if (question.question_type === "text") {
-      // Логіка для text
       const answerInput = questionElement.querySelector(".text-answer");
       const correctAnswer = question.answers.find(
         (answer) => answer.is_correct
@@ -288,7 +289,6 @@ function handleTextAnswer(event) {
   const questionIndex = event.target.getAttribute("data-question-index");
   const answerText = event.target.value;
 
-  // Логіка для перевірки текстової відповіді
   const question = questions[questionIndex];
   const correctAnswer = question.answers.find(
     (answer) => answer.is_correct
@@ -305,6 +305,7 @@ function handleTextAnswer(event) {
     saveAnswer(question.id, answerText, false);
   }
 }
+
 // Функція для збереження результату в БД
 async function saveAnswer(questionId, answerIndex, isCorrect) {
   try {

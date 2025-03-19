@@ -4,15 +4,13 @@ import {
   addAnswer,
   removeAnswer,
   removeQuestion,
-  addAnswerToSection,
   addNewQuestion,
-  questionSection,
 } from "./quiz-form-utils.js";
 
 let questionCount = 1;
 
 function sendDataToBackend(data) {
-  fetch("http://localhost:5000/create-quiz", {
+  fetch("https://questify-app-correct.onrender.com/create-quiz", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +26,7 @@ function sendDataToBackend(data) {
     .then((result) => {
       console.log("Success:", result);
       alert("Quiz created successfully!");
-      clearForm(); // Очищаємо форму після успішного створення
+      clearForm();
       window.location.href = "quiz-catalog.html";
     })
     .catch((error) => {
@@ -39,8 +37,8 @@ function sendDataToBackend(data) {
 
 function collectData(event) {
   event.preventDefault();
-  const quizName = document.getElementById("quizName").value; // Отримання назви вікторини
-  const quizDescription = document.getElementById("quizDescription").value; // Отримання опису вікторини
+  const quizName = document.getElementById("quizName").value;
+  const quizDescription = document.getElementById("quizDescription").value;
   const questions = [];
 
   // Перебір усіх запитань
@@ -59,7 +57,7 @@ function collectData(event) {
         isCorrect = answerElement.querySelector(".answer__correct").checked;
       } else if (questionType === "text") {
         isCorrect = true;
-        correctText = answerText; // У випадку текстової відповіді
+        correctText = answerText;
       }
 
       answers.push({
@@ -83,7 +81,7 @@ function collectData(event) {
   };
 
   console.log(quizData);
-  sendDataToBackend(quizData); // Відправка даних на сервер
+  sendDataToBackend(quizData);
 }
 
 // Обробники подій
@@ -126,9 +124,9 @@ function clearForm() {
   // Очищення полів першого питання
   const firstQuestion = document.querySelector(".question");
   firstQuestion.querySelector(".question__input").value = "";
-  firstQuestion.querySelector(".question__type").value = "text"; // Скидання типу питання до значення за замовчуванням
+  firstQuestion.querySelector(".question__type").value = "text";
 
   // Очищення відповідей першого питання
   const answersSection = firstQuestion.querySelector(".answers");
-  answersSection.innerHTML = getFirstAnswerHTML(1); // Очищення відповідей
+  answersSection.innerHTML = getFirstAnswerHTML(1);
 }

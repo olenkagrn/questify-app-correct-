@@ -3,7 +3,9 @@ const quizzesPerPage = 6;
 
 async function fetchQuizzes(page = 1) {
   try {
-    const response = await fetch(`http://localhost:5000/quizzes?page=${page}`);
+    const response = await fetch(
+      `https://questify-app-correct.onrender.com/quizzes?page=${page}`
+    );
     const data = await response.json();
     const quizzes = data.quizzes;
     const totalPages = data.totalPages;
@@ -19,13 +21,11 @@ async function fetchQuizzes(page = 1) {
     quizContainer.innerHTML = "";
 
     if (quizzes.length === 0) {
-      // Якщо квізів немає, виводимо повідомлення
       const emptyMessage = document.createElement("h2");
       emptyMessage.innerHTML =
         "Your catalog is empty now,<br> please create quiz";
       quizContainer.appendChild(emptyMessage);
     } else {
-      // Якщо квізи є, відображаємо їх
       for (const quiz of quizzes) {
         const { averagePercentage, name, description, questions, id } = quiz;
 
@@ -75,9 +75,12 @@ async function deleteQuiz(event) {
     .getAttribute("data-quiz-id");
 
   try {
-    const response = await fetch(`http://localhost:5000/quizzes/${quizId}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `https://questify-app-correct.onrender.com/quizzes/${quizId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (response.ok) {
       const result = await response.json();
@@ -150,19 +153,18 @@ function changePage(page) {
 
 fetchQuizzes(currentPage);
 
-// Додаємо обробку подій для кнопок, щоб запобігти закриттю
 async function editQuiz(event) {
   const quizCard = event.target.closest(".quiz-card");
   const quizId = quizCard.getAttribute("data-quiz-id");
 
   try {
-    const response = await fetch(`http://localhost:5000/quizzes/${quizId}`);
+    const response = await fetch(
+      `https://questify-app-correct.onrender.com/quizzes/${quizId}`
+    );
     const quizData = await response.json();
 
     if (quizData) {
-      // Збереження даних вікторини в локальне сховище
       localStorage.setItem("quizToEdit", JSON.stringify(quizData));
-      // Перенаправлення на сторінку редагування
       window.location.href = "edit-quiz.html";
     } else {
       console.error("Quiz data not found.");
@@ -181,14 +183,11 @@ function runQuiz(event) {
     return;
   }
 
-  // Отримання даних вікторини з сервера
-  fetch(`http://localhost:5000/quizzes/${quizId}`)
+  fetch(`https://questify-app-correct.onrender.com/quizzes/${quizId}`)
     .then((response) => response.json())
     .then((quizData) => {
       if (quizData) {
-        // Збереження даних вікторини в localStorage
         localStorage.setItem("quizToRun", JSON.stringify(quizData));
-        // Перенаправлення на сторінку опитування
         window.location.href = "questionnaire-page.html";
       } else {
         console.error("Quiz data not found.");
@@ -204,7 +203,6 @@ function openOptions(event) {
     .closest(".quiz-title__container")
     .querySelector(".quiz-options-container");
 
-  // Перевірка чи контейнер вже відкритий
   const isOpen = optionsContainer.style.display === "block";
   optionsContainer.style.display = isOpen ? "none" : "block";
 }
@@ -213,13 +211,12 @@ function updatePagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector(".pagination");
   paginationContainer.innerHTML = "";
 
-  console.log("Total pages:", totalPages); // Додайте цей рядок
+  console.log("Total pages:", totalPages);
 
   // Логіка для відображення сторінок
-  let startPage = Math.max(1, currentPage - 2); // Початкова сторінка
-  let endPage = Math.min(totalPages, currentPage + 2); // Остання сторінка
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, currentPage + 2);
 
-  // Виправляємо, якщо на початку або в кінці
   if (startPage < 1) {
     startPage = 1;
     endPage = Math.min(5, totalPages);
@@ -230,7 +227,7 @@ function updatePagination(totalPages, currentPage) {
     startPage = Math.max(1, totalPages - 4);
   }
 
-  console.log("Start page:", startPage, "End page:", endPage); // Додайте цей рядок
+  console.log("Start page:", startPage, "End page:", endPage);
 
   // Додаємо кнопку "Previous"
   paginationContainer.innerHTML += `
@@ -245,7 +242,7 @@ function updatePagination(totalPages, currentPage) {
 
   // Цифри сторінок
   for (let i = startPage; i <= endPage; i++) {
-    console.log("Processing page:", i); // Додайте цей рядок
+    console.log("Processing page:", i);
 
     paginationContainer.innerHTML += `
             <a href="#" class="pagination-link ${

@@ -21,15 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
 function fillEditForm(quizData) {
   document.getElementById("quizName").value = quizData.name;
 
-  document.getElementById("quizDescription").value = quizData.description; // Очищення існуючих питань
-
+  document.getElementById("quizDescription").value = quizData.description;
   const questionSection = document.querySelector(".question");
 
   while (
     questionSection.parentElement.children[1].classList.contains("question")
   ) {
     questionSection.parentElement.children[1].remove();
-  } // Заповнення питань
+  }
 
   quizData.questions.forEach((question, index) => {
     if (index === 0) {
@@ -83,8 +82,6 @@ function fillQuestion(question, count) {
   });
 }
 
-// Обробники подій
-
 addNewQuestion.addEventListener("click", (event) => {
   if (event.target.classList.contains("create-quiz__add-question")) {
     questionCount++;
@@ -92,8 +89,6 @@ addNewQuestion.addEventListener("click", (event) => {
     createNewQuestion(questionCount);
   }
 });
-
-// Делегування подій для видалення питань
 
 document.addEventListener("click", (event) => {
   if (event.target.classList.contains("question__remove")) {
@@ -112,7 +107,7 @@ document.addEventListener("click", (event) => {
 function clearForm() {
   document.getElementById("quizName").value = "";
 
-  document.getElementById("quizDescription").value = ""; // Видалення всіх питань, крім першого
+  document.getElementById("quizDescription").value = "";
 
   const questionSections = document.querySelectorAll(".question");
 
@@ -124,11 +119,11 @@ function clearForm() {
 
   firstQuestion.querySelector(".question__input").value = "";
 
-  firstQuestion.querySelector(".question__type").value = "text"; // Скидання типу питання до значення за замовчуванням // Очищення відповідей першого питання
+  firstQuestion.querySelector(".question__type").value = "text";
 
   const answersSection = firstQuestion.querySelector(".answers");
 
-  answersSection.innerHTML = getFirstAnswerHTML(1); // Очищення відповідей
+  answersSection.innerHTML = getFirstAnswerHTML(1);
 }
 
 document
@@ -186,13 +181,16 @@ async function updateQuiz(event) {
   console.log("Sending updated quiz data:", updatedQuizData); // Додано логування
 
   try {
-    const response = await fetch(`http://localhost:5000/quizzes/${quizId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedQuizData),
-    });
+    const response = await fetch(
+      `https://questify-app-correct.onrender.com/quizzes/${quizId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedQuizData),
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
