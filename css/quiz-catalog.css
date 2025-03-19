@@ -47,6 +47,8 @@
       border-radius: 2rem;
       .quiz-title__container {
         display: flex;
+        justify-content: space-between;
+
         .quiz-title {
           font-size: 2rem;
           font-weight: 700;
